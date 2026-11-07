@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"><meta name="theme-color" content="#142b56"><title>CPI Price Form</title><link rel="stylesheet" href="style.css"></head>
+<body>
+<header class="app-head">
+ <div class="logos"><img src="logos/psa_logo.png" alt="PSA"><img src="logos/bagong_pilipinas.png" alt="Bagong Pilipinas"></div>
+ <div class="heading"><h1>CPI PRICE FORM PRINTING SYSTEM</h1><p>PHILIPPINE STATISTICS AUTHORITY • BASILAN PROVINCIAL STATISTICAL OFFICE</p><span class="offline"><i></i> OFFLINE MODE</span></div>
+</header>
+<nav class="tabs"><button class="tab active" data-page="cpi">CPI Price Entry</button><button class="tab" data-page="rice">Rice Price Entry</button><button class="tab" data-page="stores">Store Management</button><button class="tab" data-page="outlets">Outlets</button><button class="tab" data-page="exports">Excel Export</button><button class="tab" data-page="records">Backup & Data</button></nav>
+<main>
+<section id="cpi" class="page active">
+ <div class="panel filters"><div class="field"><label>Outlet</label><select id="cOutlet"></select></div><div class="field"><label>Store</label><select id="cStore"></select></div><div class="field"><label>Month</label><select id="cMonth"></select></div><div class="field"><label>Year</label><input id="cYear" type="number" min="2000" max="2100"></div><div class="field"><label>Collection Phase</label><select id="cPhase"><option>1st Phase</option><option>2nd Phase</option></select></div><div class="field search"><label>Search commodity</label><input id="cSearch" placeholder="Search commodity..."></div></div>
+ <div class="toolbar"><strong id="cCount">Loading commodities...</strong><button class="primary" id="saveCpi">Save Prices</button><button class="dark" id="printCpi">Print A4 Form</button></div>
+ <div id="cTable" class="data-list"></div>
+ <p class="hint">Price and remarks are saved locally on this phone. Select a specific store before printing.</p>
+</section>
+<section id="rice" class="page">
+ <div class="panel filters"><div class="field"><label>Outlet</label><select id="rOutlet"></select></div><div class="field"><label>Month</label><select id="rMonth"></select></div><div class="field"><label>Year</label><input id="rYear" type="number" min="2000" max="2100"></div><div class="field"><label>Collection Phase</label><select id="rPhase"><option>1st Phase</option><option>2nd Phase</option></select></div></div>
+ <div class="toolbar"><strong id="rCount">Rice reference data</strong><button class="primary" id="saveRice">Save Rice Prices</button><button class="dark" id="printRice">Print Rice Form</button></div>
+ <div id="rTable" class="rice-list"></div><p class="hint">Three variety/price boxes are provided per rice classification. Changes are stored on this device.</p>
+</section>
+<section id="stores" class="page">
+ <div class="panel"><h2>Store Management</h2><p class="hint">Manage monitored establishments. Store edits do not delete previously saved price entries.</p>
+  <div class="filters"><div class="field"><label>Search stores</label><input id="storeSearch" placeholder="Store name, address or contact"></div><div class="field"><label>Outlet</label><select id="storeOutletFilter"><option value="">All outlets</option></select></div><div class="field"><label>Status</label><select id="storeStatusFilter"><option value="">All statuses</option><option>Active</option><option>Inactive</option></select></div></div>
+  <div class="toolbar"><strong id="storeCount">0 stores</strong><button class="primary" id="addStore">+ Add Store</button></div><div id="storeList" class="data-list"></div>
+ </div>
+ <div class="panel" id="storeFormPanel" hidden><h3 id="storeFormTitle">Add Store</h3><input type="hidden" id="editStoreId"><div class="filters"><div class="field"><label>Store Name *</label><input id="storeName" required></div><div class="field"><label>Store Address</label><input id="storeAddress"></div><div class="field"><label>Contact Number</label><input id="storeContact" inputmode="tel"></div><div class="field"><label>Outlet *</label><select id="storeOutlet"></select></div><div class="field"><label>Status</label><select id="storeStatus"><option>Active</option><option>Inactive</option></select></div></div><div class="toolbar"><button class="primary" id="saveStore">Save Store</button><button class="dark" id="cancelStore">Cancel</button></div></div>
+</section>
+<section id="outlets" class="page"><div class="panel"><h2>Outlet Management</h2><p class="hint">Outlet assignments are managed through each store's edit form. Historical price entries remain unchanged.</p><div id="outletSummary" class="data-list"></div></div></section>
+<section id="exports" class="page"><div class="panel"><h2>Excel Export Center</h2><p class="hint">Choose the records to export. The export includes a store directory, CPI records, Rice records and summary. Use the filters to narrow the report.</p>
+ <div class="filters"><div class="field"><label>Export scope</label><select id="exportScope"><option value="all">All outlets / stores</option><option value="outlet">One outlet</option><option value="store">One store</option></select></div><div class="field"><label>Outlet</label><select id="exportOutlet"></select></div><div class="field"><label>Store</label><select id="exportStore"><option value="">All stores</option></select></div><div class="field"><label>Month (optional)</label><select id="exportMonth"><option value="">All months</option></select></div><div class="field"><label>Year (optional)</label><input id="exportYear" type="number" placeholder="All years"></div><div class="field"><label>Collection phase</label><select id="exportPhase"><option value="">All phases</option><option>1st Phase</option><option>2nd Phase</option></select></div><div class="field"><label>From date (optional)</label><input id="exportFrom" type="date"></div><div class="field"><label>To date (optional)</label><input id="exportTo" type="date"></div></div>
+ <div class="toolbar"><button class="dark" id="previewExport">Preview Export</button><button class="primary" id="downloadExport">Download Excel-compatible workbook</button><button id="resetExport">Reset Filters</button></div><div id="exportPreview" class="panel hint">Select filters, then preview the export.</div>
+ </div></section>
+<section id="records" class="page"><div class="panel"><h2>Local Data & Backup</h2><p>All saved records remain on this Android phone. No account or internet connection is required.</p><div class="toolbar"><button class="primary" id="exportBackup">Export Backup</button><label class="filebtn">Import Backup<input type="file" id="importBackup" accept="application/json"></label><button class="danger" id="clearData">Clear All Saved Data</button></div><p id="backupStatus" class="hint">Export a backup regularly before changing or resetting your phone.</p></div><div class="panel"><h3>Reference data included</h3><p id="referenceInfo"></p><p class="hint">The supplied ZIP contains CPI commodity workbooks for Outlets 1, 2 and 4 only. Rice reference data covers Outlets 1–6.</p></div></section>
+</main>
+<footer>PSA BASILAN • CPI PRICE FORM • LOCAL DEVICE STORAGE</footer>
+<script src="data/cpi_reference.js"></script><script src="data/rice_reference.js"></script><script src="app.js"></script>
+</body></html>
